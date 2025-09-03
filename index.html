@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6G Connectivity Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'dark-bg': '#1a1a2e',
+                        'dark-card': '#16213e',
+                        'dark-text': '#e0e0e0',
+                        'dark-accent': '#e94560',
+                        'light-bg': '#f0f4f8',
+                        'light-card': '#ffffff',
+                        'light-text': '#333333',
+                        'light-accent': '#3e5c76',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .text-glow {
+            text-shadow: 0 0 5px #e94560, 0 0 10px #e94560;
+        }
+        .ring-glow {
+            box-shadow: 0 0 5px #e94560, 0 0 10px #e94560, inset 0 0 5px #e94560;
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text transition-colors duration-500">
+    <div class="min-h-screen flex flex-col p-4 md:p-8">
+
+        <!-- Header -->
+        <header class="flex justify-between items-center py-4 mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-dark-accent text-glow transition-colors duration-500">
+                6G Dashboard
+            </h1>
+            <div class="flex items-center space-x-4">
+                <span id="networkStatus" class="flex items-center text-sm font-medium">
+                    <span class="relative flex h-3 w-3 mr-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    Online
+                </span>
+                <button id="themeToggle" class="p-2 rounded-full bg-dark-card transition-colors duration-500">
+                    <svg id="moonIcon" class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="sunIcon" class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.586 3.414a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.414 14.586a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM4 10a1 1 0 01-1 1H2a1 1 0 110-2h1a1 1 0 011 1zM5.414 5.414a1 1 0 011.414 0L7.5 6.5a1 1 0 01-1.414 1.414L5.414 6.5a1 1 0 010-1.414zM16.5 13.5a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-grow">
+
+            <!-- Card 1: Network Speed -->
+            <div class="bg-dark-card rounded-xl p-6 shadow-lg border border-dark-accent ring-glow transition-all duration-300 hover:scale-105">
+                <h2 class="text-xl font-semibold mb-2">Network Speed</h2>
+                <p class="text-dark-text text-sm">Download / Upload</p>
+                <div class="flex items-end justify-center mt-4">
+                    <span id="downloadSpeed" class="text-5xl font-bold text-dark-accent">1.2</span>
+                    <span class="text-2xl font-semibold text-dark-accent ml-2">Tbps</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Latency -->
+            <div class="bg-dark-card rounded-xl p-6 shadow-lg border border-dark-accent ring-glow transition-all duration-300 hover:scale-105">
+                <h2 class="text-xl font-semibold mb-2">Latency</h2>
+                <p class="text-dark-text text-sm">Round Trip Time</p>
+                <div class="flex items-end justify-center mt-4">
+                    <span id="latency" class="text-5xl font-bold text-dark-accent">2.1</span>
+                    <span class="text-2xl font-semibold text-dark-accent ml-2">ms</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Connected Devices -->
+            <div class="bg-dark-card rounded-xl p-6 shadow-lg border border-dark-accent ring-glow transition-all duration-300 hover:scale-105">
+                <h2 class="text-xl font-semibold mb-2">Connected Devices</h2>
+                <p class="text-dark-text text-sm">Active Connections</p>
+                <div class="flex items-end justify-center mt-4">
+                    <span id="connectedDevices" class="text-5xl font-bold text-dark-accent">14,580</span>
+                    <span class="text-2xl font-semibold text-dark-accent ml-2"></span>
+                </div>
+            </div>
+
+            <!-- Card 4: Network Utilization -->
+            <div class="md:col-span-2 bg-dark-card rounded-xl p-6 shadow-lg border border-dark-accent ring-glow transition-all duration-300 hover:scale-105">
+                <h2 class="text-xl font-semibold mb-2">Network Utilization</h2>
+                <p class="text-dark-text text-sm">Current bandwidth usage</p>
+                <div class="w-full h-8 mt-4 bg-gray-700 rounded-full overflow-hidden">
+                    <div id="utilizationBar" class="h-full bg-green-500 rounded-full transition-all duration-500" style="width: 65%;"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-dark-text">
+                    <span>0%</span>
+                    <span id="utilizationValue">65%</span>
+                    <span>100%</span>
+                </div>
+            </div>
+
+            <!-- Card 5: Data Transfer History -->
+            <div class="lg:col-span-3 bg-dark-card rounded-xl p-6 shadow-lg border border-dark-accent ring-glow transition-all duration-300 hover:scale-105">
+                <h2 class="text-xl font-semibold mb-2">Data Transfer History</h2>
+                <p class="text-dark-text text-sm mb-4">Total data transferred this month</p>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-gray-700 rounded-lg">
+                        <p class="text-2xl font-bold text-purple-400" id="dataUp">345</p>
+                        <p class="text-sm text-gray-400">TB Uploaded</p>
+                    </div>
+                    <div class="p-4 bg-gray-700 rounded-lg">
+                        <p class="text-2xl font-bold text-blue-400" id="dataDown">789</p>
+                        <p class="text-sm text-gray-400">TB Downloaded</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-8 text-center text-sm text-gray-500">
+            <p>2024 © 6G Dashboard. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+
+        // Function to toggle theme
+        function toggleTheme() {
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Set initial theme based on localStorage or system preference
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                if (savedTheme === 'light') {
+                    body.classList.remove('dark');
+                    body.classList.add('light');
+                    moonIcon.style.display = 'block';
+                    sunIcon.style.display = 'none';
+                }
+            } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+            }
+        }
+
+        // Update dashboard values with a random interval
+        function updateDashboard() {
+            const downloadSpeed = (Math.random() * 0.5 + 1).toFixed(1);
+            const latency = (Math.random() * 1.5 + 1).toFixed(1);
+            const connectedDevices = Math.floor(Math.random() * 5000) + 12000;
+            const utilization = Math.floor(Math.random() * 40) + 50;
+            const dataUp = Math.floor(Math.random() * 200) + 300;
+            const dataDown = Math.floor(Math.random() * 300) + 600;
+
+            document.getElementById('downloadSpeed').innerText = downloadSpeed;
+            document.getElementById('latency').innerText = latency;
+            document.getElementById('connectedDevices').innerText = connectedDevices.toLocaleString();
+            document.getElementById('utilizationBar').style.width = `${utilization}%`;
+            document.getElementById('utilizationValue').innerText = `${utilization}%`;
+            document.getElementById('dataUp').innerText = dataUp;
+            document.getElementById('dataDown').innerText = dataDown;
+
+            setTimeout(updateDashboard, 5000); // Update every 5 seconds
+        }
+
+        // Event listener for the theme toggle button
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Initialize on page load
+        window.onload = function() {
+            initializeTheme();
+            updateDashboard();
+        }
+    </script>
+</body>
+</html>
